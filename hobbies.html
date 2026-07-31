@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hobbies | Emily Thomas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code:wght@400;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Yeseva+One&display=swap" rel="stylesheet">
+  <style>
+    /* --- CSS RESET & GLOBALS --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f2eee8;
+      color: #191919;
+      font-family: 'Carlito', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* --- STICKY NAVIGATION BAR --- */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #f2eee8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      border-bottom: 2px solid rgba(80, 0, 0, 0.15);
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #191919;
+    }
+
+    .nav-left span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #191919;
+    }
+
+    .logo-placeholder {
+      width: 36px;
+      height: 36px;
+      background-color: #500000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-item {
+      padding: 0 1.5rem;
+      font-weight: 600;
+      color: #191919;
+      transition: color 0.2s ease;
+    }
+
+    /* Highlight the active page in maroon */
+    .nav-item.active,
+    .nav-item:hover {
+      color: #500000;
+    }
+
+    .nav-divider {
+      width: 2px;
+      height: 20px;
+      background-color: #500000;
+    }
+
+    /* --- PAGE HEADER --- */
+    .page-header {
+      max-width: 1100px;
+      margin: 4rem auto 2.5rem;
+      padding: 0 5%;
+      text-align: center;
+    }
+
+    .page-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #500000;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    .page-subtitle {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #191919;
+      opacity: 0.85;
+      font-family: 'Cardo', serif;
+    }
+
+    /* --- HOBBIES MAIN CONTAINER --- */
+    .hobbies-container {
+      max-width: 1100px;
+      margin: 0 auto 6rem;
+      padding: 0 5%;
+    }
+
+    .hobby-section {
+      margin-bottom: 4.5rem;
+    }
+
+    /* Heading row with line extending to right margin */
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #500000;
+      white-space: nowrap; /* Keeps heading on one line */
+    }
+
+    .heading-line {
+      flex-grow: 1; /* Automatically fills remaining space to right margin */
+      height: 2px;
+      background-color: rgba(80, 0, 0, 0.25);
+    }
+
+    /* Subtitle text below heading */
+    .section-subtitle {
+      font-family: 'Cardo', serif;
+      font-size: 1.15rem;
+      color: #191919;
+      opacity: 0.85;
+      margin-bottom: 1.75rem;
+      max-width: 900px;
+    }
+
+    /* Horizontal row for images */
+    .hobby-gallery-row {
+      display: flex;
+      flex-wrap: wrap; /* Allows wrapping gracefully on smaller screens */
+      gap: 1.75rem;
+      align-items: flex-start;
+    }
+
+    /* Each image + caption pair */
+    .hobby-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Centers caption under its respective image */
+      margin: 0;
+    }
+
+    /* Fixed Height + Variable Width Images */
+    .hobby-image {
+      height: 240px;       /* <-- CHANGE THIS to make all images taller or shorter */
+      width: auto;         /* Automatically scales width based on aspect ratio */
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .hobby-image:hover {
+      transform: translateY(-3px);
+    }
+
+    /* =========================================================
+       CAPTION FONT STYLES (Easily customize your fonts below!)
+       ========================================================= */
+    .hobby-caption {
+      margin-top: 0.6rem;
+      text-align: center;
+      
+      /* FONT FAMILY: Try 'Cardo', 'Lora', 'Carlito', or 'Fira Code' */
+      font-family: 'Lora', serif;
+      
+      /* FONT SIZE & WEIGHT */
+      font-size: 0.95rem;
+      font-weight: 400;
+      font-style: italic;
+      
+      /* FONT COLOR */
+      color: #191919;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY NAVBAR -->
+  <nav class="navbar" id="top">
+    <a href="index.html" class="nav-left">
+      <div class="logo-placeholder"><img src="logo.png" alt="Emily Logo" width="36"></div>
+      <span>Emily Thomas</span>
+    </a>
+    <ul class="nav-right">
+      <li><a href="projects.html" class="nav-item">Projects</a></li>
+      <div class="nav-divider"></div>
+      <li><a href="school.html" class="nav-item">School</a></li>
+      <div class="nav-divider"></div>
+      <li><a href="hobbies.html" class="nav-item active">Hobbies</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <h1 class="page-title">Hobbies & Interests</h1>
+    <p class="page-subtitle">What keeps me inspired outside of engineering and design.</p>
+  </header>
+
+  <!-- HOBBIES CONTENT -->
+  <main class="hobbies-container">
+
+    <!-- ======================================================== -->
+    <!-- SECTION 1: PIANO -->
+    <!-- ======================================================== -->
+    <section class="hobby-section">
+      <div class="section-heading-row">
+        <h2 class="section-heading">Piano</h2>
+        <div class="heading-line"></div>
+      </div>
+      <p class="section-subtitle">
+        I’ve been piano for over a decade, currently focusing on jazz and movie scores. Here are a few snapshots.
+      </p>
+
+      <div class="hobby-gallery-row">
+        <!-- Piano Picture 1 -->
+        <figure class="hobby-item">
+          <img src="clairdelune.png" alt="Piano recital" class="hobby-image">
+          <figcaption class="hobby-caption">Currently practicing</figcaption>
+        </figure>
+
+        <!-- Piano Picture 2 -->
+        <figure class="hobby-item">
+          <img src="mapleleafrag.png" alt="Sheet music" class="hobby-image">
+          <figcaption class="hobby-caption">Added to my piano repertoire recently!</figcaption>
+        </figure>
+
+        <!-- Piano Picture 3  ADD WHEN POSSIBLE**************
+        <figure class="hobby-item">
+          <img src="YOUR-PIANO-3.jpg" alt="Grand piano" class="hobby-image">
+          <figcaption class="hobby-caption">Acoustic Grand Setup</figcaption>
+        </figure> -->
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SECTION 2: BOOKS & MOVIES -->
+    <!-- ======================================================== -->
+    <section class="hobby-section">
+      <div class="section-heading-row">
+        <h2 class="section-heading">Books & Movies</h2>
+        <div class="heading-line"></div>
+      </div>
+      <p class="section-subtitle">
+        A rotating collection of novels and my favorite cinema recommendations.
+      </p>
+
+      <div class="hobby-gallery-row">
+        <!-- Books Picture 1 -->
+        <figure class="hobby-item">
+          <img src="pixarbook.png" alt="Favorite book" class="hobby-image">
+          <figcaption class="hobby-caption">Recently Read, Highly Reccomend!</figcaption>
+        </figure>
+
+        <!-- Books Picture 2 -->
+        <figure class="hobby-item">
+          <img src="spiderman movie.png" alt="Movie ticket or scene" class="hobby-image">
+          <figcaption class="hobby-caption">Watching in theaters soon!</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SECTION 3: PICTURES -->
+    <!-- ======================================================== -->
+    <section class="hobby-section">
+      <div class="section-heading-row">
+        <h2 class="section-heading">Pictures</h2>
+        <div class="heading-line"></div>
+      </div>
+      <p class="section-subtitle">
+        Moments captured to be added...
+      </p>
+        <!--
+      <div class="hobby-gallery-row">
+         Picture 1 
+        <figure class="hobby-item">
+          <img src="YOUR-PHOTO-1.jpg" alt="Photography 1" class="hobby-image">
+          <figcaption class="hobby-caption">35mm Film in Austin</figcaption>
+        </figure>
+
+         Picture 2 
+        <figure class="hobby-item">
+          <img src="YOUR-PHOTO-2.jpg" alt="Photography 2" class="hobby-image">
+          <figcaption class="hobby-caption">Sunset over Campus</figcaption>
+        </figure>
+
+        Picture 3
+        <figure class="hobby-item">
+          <img src="YOUR-PHOTO-3.jpg" alt="Photography 3" class="hobby-image">
+          <figcaption class="hobby-caption">Lab Prototype Close-Up</figcaption>
+        </figure>
+      </div>
+       -->
+    </section>
+
+  </main>
+
+</body>
+</html>

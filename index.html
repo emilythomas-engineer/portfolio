@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emily Thomas | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Fascinate&family=Fira+Code:wght@400;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Yeseva+One&display=swap" rel="stylesheet">
+  <style>
+    /* --- CSS RESET & GLOBALS --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f2eee8;
+      color: #191919;
+      font-family: 'Carlito', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* --- STICKY NAVIGATION BAR --- */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #f2eee8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      border-bottom: 2px solid rgba(80, 0, 0, 0.15);
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Playfair Display", serif;
+      font-weight: 400;
+      font-size: 1.25rem;
+      color: #191919;
+    }
+
+    .logo-placeholder {
+      width: 36px;
+      height: 36px;
+      background-color: #500000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-item {
+      padding: 0 1.5rem;
+      font-weight: 600;
+      color: #191919;
+      transition: color 0.2s ease;
+    }
+
+    .nav-item:hover {
+      color: #500000;
+    }
+
+    .nav-divider {
+      width: 2px;
+      height: 20px;
+      background-color: #500000;
+    }
+
+    /* --- HERO & ABOUT ME SECTION --- */
+    .hero {
+      max-width: 1100px;
+      margin: 4rem auto 2rem;
+      padding: 0 5%;
+      text-align: center;
+    }
+
+    .howdy-title {
+      font-size: 4rem;
+      font-weight: 700;
+      color: #191919;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    .subtitle {
+      font-size: 2rem;
+      font-weight: 400;
+      color: #191919;
+      margin-bottom: 0.75rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .name-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #500000;
+      margin-bottom: 3rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    /* Formatted About Me Card */
+    .about-card {
+      background: rgba(255, 255, 255, 0.4);
+      border-left: 4px solid #500000;
+      padding: 2rem 2.25rem; /* Up from 2rem on the sides! */
+      border-radius: 0 12px 12px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+      font-family: 'Cardo', serif;
+    }
+
+    .about-card strong {
+      color: #500000;
+    }
+
+    /* --- ANIMATED TERMINAL BOX (Fixed Cursor Height) --- */
+    .code-container {
+      margin: 2rem 0 3.5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Outer box handles the background, padding, and border */
+    .code-box {
+      background: rgba(80, 0, 0, 0.08);
+      padding: 0.8rem 1.4rem;
+      border-radius: 8px;
+      border: 1px solid rgba(80, 0, 0, 0.2);
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+    }
+    .hammer-icon {
+      position: absolute;
+      top: -30px;       /* Pulls the hammer up so it sits on top of the border */
+      left: -85px;      /* Pushes it slightly off the top-right corner */
+      width: 100px;       /* Keeps it small and subtle */
+      height: 100px;
+      pointer-events: none; /* Prevents it from blocking any clicks */
+      transform: scaleX(-1) rotate(-40deg);
+
+      mix-blend-mode: multiply;
+    }
+
+    /* Inner text only handles the typing and a normal-height cursor */
+    .code-text {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.15rem;
+      color: #191919;
+      line-height: 1.2;
+      
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      border-right: 2.5px solid #500000; /* Cursor is now only font-height tall */
+
+      animation: 
+        type-width 3.5s steps(55, end) forwards,
+        blink-cursor 0.75s step-end infinite;
+    }
+
+    @keyframes type-width {
+      from { width: 0; }
+      to { width: 55ch; }
+    }
+
+    @keyframes blink-cursor {
+      from, to { border-color: transparent; }
+      50% { border-color: #500000; }
+    }
+
+    /* --- ABOUT ME SECTION (With Stacked Fascinate Title) --- */
+    /* --- ABOUT ME SECTION --- */
+    .about-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 3.0rem;
+      margin-bottom: 4rem;
+      width: 100%;
+    }
+
+    /* Sits on the background to the left of the maroon border */
+    .about-side-title {
+      font-family: 'Fascinate', display;
+      font-size: 3.8rem;
+      line-height: 1.1;
+      color: #500000;
+      text-align: right; /* Hugs cleanly against the maroon border */
+      flex-shrink: 0;
+      user-select: none;
+      margin-top: 1.4rem; /* <--- ADD THIS to visually line up with the first line of the paragraph! */
+      width: 220px;
+    }
+
+    /* The white box with the maroon left border */
+    .about-card {
+      font-family: 'Cardo', serif;
+      font-weight: 400;
+      background: rgba(255, 255, 255, 0.5);
+      border-left: 4px solid #500000;
+      padding: 1.75rem 2rem;
+      border-radius: 0 12px 12px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      font-size: 1.15rem;
+      line-height: 1.7;
+      flex: 1
+    }
+
+    .about-content {
+      font-family: 'Cardo', serif;
+      font-weight: 400;
+      font-size: 1.15rem;
+      line-height: 1.7;
+    }
+
+    /* --- PROJECT GALLERY & INTERACTIVE BAR --- */
+    .gallery-section {
+      max-width: 1100px;
+      margin: 0 auto 6rem;
+      padding: 2rem 5%;
+      position: relative;
+    }
+
+    .gallery-header {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #500000;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    .gallery-subtitle {
+      font-size: 0.95rem;
+      color: #191919;
+      opacity: 0.8;
+      margin-top: 0.25rem;
+    }
+
+
+    /* Section Headings with Big Arrows */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      color: #191919;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    .arrow-link {
+      font-size: 1.8rem;
+      color: #500000;
+      font-weight: bold;
+      transition: transform 0.2s ease;
+    }
+
+    .arrow-link:hover {
+      transform: translateX(6px);
+    }
+
+    /* Project Cards Grid */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .project-card {
+      background-color: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .gif-container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background-color: #e5dfd7;
+      overflow: hidden;
+    }
+
+    .project-gif {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Description shows only on hover */
+    .hover-description {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(80, 0, 0, 0.92);
+      color: #fff;
+      padding: 1.25rem;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover .hover-description {
+      opacity: 1;
+    }
+
+    .card-footer {
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .project-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #191919;
+      font-family: 'Yeseva One', serif;
+    }
+
+    .project-icon-link {
+      color: #500000;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: rgba(80, 0, 0, 0.08);
+      transition: background-color 0.2s ease;
+    }
+
+    .project-icon-link:hover {
+      background-color: rgba(80, 0, 0, 0.2);
+    }
+
+    /* --- EXPLORE MORE / EXTERNAL LINKS SECTION --- */
+    .explore-more-section {
+      max-width: 700px;
+      margin: 4rem auto 6rem;
+      padding: 0 5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      text-align: center;
+    }
+
+    /* Primary Button - Bookshelf */
+    .btn-primary-explore {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 480px;
+      padding: 1rem 1.75rem;
+      background-color: #500000;
+      color: #ffffff;
+      font-family: 'Carlito', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      border-radius: 8px;
+      border: 2px solid #500000;
+      box-shadow: 0 4px 14px rgba(80, 0, 0, 0.18);
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary-explore:hover {
+      background-color: #6a0000;
+      border-color: #6a0000;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(80, 0, 0, 0.28);
+    }
+
+    /* Secondary Button - High School Portfolio */
+    .btn-secondary-explore {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 480px;
+      padding: 0.9rem 1.75rem;
+      background-color: transparent;
+      color: #500000;
+      font-family: 'Carlito', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 8px;
+      border: 2px solid #500000;
+      transition: all 0.25s ease;
+    }
+
+    .btn-secondary-explore:hover {
+      background-color: rgba(80, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <!-- STICKY NAVBAR -->
+  <nav class="navbar" id="top">
+    <a href="#top" class="nav-left">
+      <div class="logo-placeholder"><img src="logo.png" alt="Emily Logo" width="36"></div>
+      <span>Emily Thomas</span>
+    </a>
+    <ul class="nav-right">
+      <li><a href="projects.html" class="nav-item">Projects</a></li>
+      <div class="nav-divider"></div>
+      <li><a href="school.html" class="nav-item">School</a></li>
+      <div class="nav-divider"></div>
+      <li><a href="hobbies.html" class="nav-item">Bookshelf</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO & ABOUT ME -->
+  <main class="hero">
+    <h1 class="howdy-title">Howdy!</h1>
+    <h2 class="subtitle">Welcome to my Portfolio</h2>
+    <h3 class="name-text">My name is Emily Thomas</h3>
+
+    <!-- ABOUT ME SECTION -->
+    <section class="about-section">
+        <div class="about-side-title">
+            ABOUT<br>ME
+        </div>
+        <div class="about-card">
+            <p>I’m a mechanical engineering sophomore at Texas A&M and serve as the Branding Officer for the A&M ASME Chapter. I love turning wild ideas into scalable 3D models and real physical prototypes. Outside of school, I’m usually playing the piano, reading, jogging, or spending time with my dog.</p>
+        </div>
+    </section>
+
+    <!-- ANIMATED CODE TEXT (Wrapped in .code-box to fix giant cursor) -->
+    <div class="code-container">
+        <div class="code-box">
+            <div class="code-text">&gt; Take a look around to see what I’ve been building!</div>
+            <img src="hammer.gif" class="hammer-icon" alt="Hammering">
+        </div>
+    </div>
+    </div>
+    
+    
+
+  <!-- PROJECT GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-header">
+      <h2 class="gallery-title">Project Gallery</h2>
+      <p class="gallery-subtitle">Here are some of the projects I worked on</p>
+    </div>
+
+
+    <!-- PERSONAL PROJECTS SECTION -->
+    <div class="section-header">
+      <h3 class="section-title">Personal Projects</h3>
+      <a href="projects.html" class="arrow-link" title="View all Personal Projects">&#10132;</a>
+    </div>
+
+    <div class="project-grid">
+      <!-- Personal Project 1 -->
+      <div class="project-card">
+        <div class="gif-container">
+          <img src="Lego.gif" alt="Project 1 GIF" class="project-gif">
+          <div class="hover-description">
+            Digital LEGOs, but make it parametric! A smart model that scales to any brick size with zero rebuild errors.
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="project-name">Lego Bricks</span>
+          <a href="legobricks.html" class="project-icon-link" title="Go to project page">&#8599;</a>
+        </div>
+      </div>
+
+      <!-- Personal Project 2 -->
+      <div class="project-card">
+        <div class="gif-container">
+          <img src="comingsoon.gif" alt="Project 2 GIF" class="project-gif">
+          <div class="hover-description">
+            Coming soon!
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="project-name">Skateboard Truck</span>
+          <a href="project2.html" class="project-icon-link" title="Go to project page">&#8599;</a>
+        </div>
+      </div>
+
+      <!-- Personal Project 3 -->
+      <div class="project-card">
+        <div class="gif-container">
+          <img src="comingsoon.gif" alt="Project 3 GIF" class="project-gif">
+          <div class="hover-description">
+            Coming soon!
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="project-name">Fire Hydrant</span>
+          <a href="project3.html" class="project-icon-link" title="Go to project page">&#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHOOL PROJECTS SECTION -->
+    <div class="section-header">
+      <h3 class="section-title">School Projects</h3>
+      <a href="school.html" class="arrow-link" title="View all School Projects">&#10132;</a>
+    </div>
+
+    <div class="project-grid">
+      <!-- School Project 1 -->
+      <div class="project-card">
+        <div class="gif-container">
+          <img src="Ignite.gif" alt="School Project 1 GIF" class="project-gif">
+          <div class="hover-description">
+            Ignite Design Challenge 2nd place winner! A lightweight, high-downforce rear wing mount engineered to handle serious race-day aero loads.
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="project-name">Rear Wing Mount</span>
+          <a href="school1.html" class="project-icon-link" title="Go to project page">&#8599;</a>
+        </div>
+      </div>
+
+      <!-- School Project 2 -->
+      <div class="project-card">
+        <div class="gif-container">
+          <img src="comingsoon.gif" alt="School Project 2 GIF" class="project-gif">
+          <div class="hover-description">
+            Coming soon!
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="project-name">Coming soon!</span>
+          <a href="school2.html" class="project-icon-link" title="Go to project page">&#8599;</a>
+        </div>
+      </div>
+
+      <!-- School Project 3 -->
+      <div class="project-card">
+        <div class="gif-container">
+          <img src="comingsoon.gif" alt="School Project 3 GIF" class="project-gif">
+          <div class="hover-description">
+            Coming soon!
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="project-name">Coming soon!</span>
+          <a href="school3.html" class="project-icon-link" title="Go to project page">&#8599;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- EXPLORE MORE LINKS -->
+  <section class="explore-more-section">
+    <!-- Bookshelf Button (Primary Style) -->
+    <a href="hobbies.html" target="_blank" rel="noopener noreferrer" class="btn-primary-explore">
+      Check out my Bookshelf for books, piano, and more! &#8599;
+    </a>
+
+    <!-- High School Portfolio Button (Secondary Outlined Style) -->
+    <a href="https://sites.google.com/k12.friscoisd.org/emily-thomass-online-portfolio/home" target="_blank" rel="noopener noreferrer" class="btn-secondary-explore">
+      Check out my high school portfolio &#8599;
+    </a>
+  </section>
+
+
+
+
+</body>
+</html>
