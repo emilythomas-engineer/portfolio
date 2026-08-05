@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fire Hydrant | Emily Thomas</title>
+  <!-- ADD THIS LINE FOR YOUR FAVICON -->
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code:wght@400;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Yeseva+One&display=swap" rel="stylesheet">
+  <style>
+    /* --- CSS RESET & GLOBALS --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f2eee8;
+      color: #191919;
+      font-family: 'Carlito', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* --- STICKY NAVIGATION BAR --- */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #f2eee8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      border-bottom: 2px solid rgba(80, 0, 0, 0.15);
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #191919;
+    }
+
+    .nav-left span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #191919;
+    }
+
+    .logo-placeholder {
+      width: 36px;
+      height: 36px;
+      background-color: #500000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-item {
+      padding: 0 1.5rem;
+      font-weight: 600;
+      color: #191919;
+      transition: color 0.2s ease;
+    }
+
+    .nav-item:hover {
+      color: #500000;
+    }
+
+    .nav-divider {
+      width: 2px;
+      height: 20px;
+      background-color: #500000;
+    }
+
+    /* --- PROJECT PAGE HEADER --- */
+    .project-header {
+      max-width: 900px;
+      margin: 4rem auto 2rem;
+      padding: 0 5%;
+      text-align: center;
+    }
+
+    .project-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #500000;
+      line-height: 1.1;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    /* --- MAIN CONTENT LAYOUT --- */
+    .project-content {
+      max-width: 900px;
+      margin: 0 auto 6rem;
+      padding: 0 5%;
+    }
+
+    .section-block {
+      margin-bottom: 3.5rem;
+    }
+
+    /* Section Headings */
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #500000;
+      white-space: nowrap;
+    }
+
+    .heading-line {
+      flex-grow: 1;
+      height: 2px;
+      background-color: rgba(80, 0, 0, 0.25);
+    }
+
+    /* Text areas under headings */
+    .section-text {
+      font-family: 'Cardo', serif;
+      font-size: 1.15rem;
+      color: #191919;
+      line-height: 1.7;
+      opacity: 0.9;
+    }
+
+    /* --- IMAGE CAROUSEL STYLES --- */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      background-color: #e5dfd7;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      margin-bottom: 1.5rem;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+      pointer-events: none;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .carousel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background-color: #e5dfd7;
+    }
+
+    /* Left & Right Arrow Buttons */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(80, 0, 0, 0.8);
+      color: #ffffff;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease;
+      z-index: 10;
+    }
+
+    .carousel-btn:hover {
+      background-color: #500000;
+    }
+
+    .carousel-prev {
+      left: 15px;
+    }
+
+    .carousel-next {
+      right: 15px;
+    }
+
+    /* --- EXTERNAL LINK BUTTON --- */
+    .btn-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 1rem;
+    }
+
+    .btn-project-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.85rem 1.5rem;
+      background-color: #500000;
+      color: #ffffff;
+      font-family: 'Carlito', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 8px;
+      border: 2px solid #500000;
+      box-shadow: 0 4px 14px rgba(80, 0, 0, 0.18);
+      transition: all 0.25s ease;
+    }
+
+    .btn-project-link:hover {
+      background-color: #6a0000;
+      border-color: #6a0000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(80, 0, 0, 0.28);
+    }
+
+    .section-text ul {
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+
+    /* Style inline text hyperlinks */
+    .section-text a {
+      color: #500000;                     /* Uses your signature maroon color */
+      text-decoration: underline;          /* Adds an underline so users know it's clickable */
+      font-weight: 600;                    /* Makes the link text slightly bolder */
+      transition: color 0.2s ease;
+    }
+
+    .section-text a:hover {
+      color: #800000;                     /* Slightly brighter maroon on hover */
+    }
+
+    /* Heading Subtitle - Matches header font but smaller & softer opacity */
+    .section-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;         /* Slightly smaller than heading's 1.85rem */
+      font-weight: 700;
+      color: #500000;              /* Same maroon color */
+      opacity: 0.8;               /* 0.8 opacity */
+      line-height: 1.3;
+      margin-top: -0.25rem;       /* Pulls it slightly closer to the heading line */
+      margin-bottom: 1.25rem;    /* Adds spacing before the paragraph text */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY NAVBAR -->
+  <nav class="navbar" id="top">
+    <a href="index.html" class="nav-left">
+      <div class="logo-placeholder"><img src="logo.png" alt="Emily Logo" width="36"></div>
+      <span>Emily Thomas</span>
+    </a>
+    <ul class="nav-right">
+      <li><a href="projects.html" class="nav-item">Projects</a></li>
+      <div class="nav-divider"></div>
+      <li><a href="school.html" class="nav-item">School</a></li>
+      <div class="nav-divider"></div>
+      <li><a href="hobbies.html" class="nav-item">Hobbies</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="project-header">
+    <h1 class="project-title">Fire Hydrant</h1>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="project-content">
+
+    <!-- ======================================================== -->
+    <!-- SECTION 1: PROJECT AND HIGHLIGHTS -->
+    <!-- ======================================================== -->
+    <section class="section-block">
+      <div class="section-heading-row">
+        <h2 class="section-heading">Project and Highlights</h2>
+        <div class="heading-line"></div>
+      </div>
+      <div class="section-text">
+        <p>
+            This project focused on 3D CAD modeling the exterior body of a classic municipal fire hydrant using an engineering drawing. The build focused on recreating key geometric components, establishing proper part relations, and assembling the individual pieces into a complete 3D model.
+        </p>
+        <ul>
+            <li> <strong>Main barrel modeling:</strong> Used a combination of extruding, circular patterns, cuts, and lofting to create barrel.</li>
+            <li> <strong>Nozzle caps modeling:</strong> Used the revolve feature to create the cap from a cross section drawing</li>
+            <li> <strong>Assembly Mates:</strong> Mated the barrel, bonnet, and nozzle caps together in a multi-part SolidWorks assembly.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SECTION 2: WHAT I LEARNED -->
+    <!-- ======================================================== -->
+    <section class="section-block">
+      <div class="section-heading-row">
+        <h2 class="section-heading">What I Learned</h2>
+        <div class="heading-line"></div>
+      </div>
+      <!-- Subtitle styled like header but smaller + 0.8 opacity -->
+      <p class="section-subtitle">
+       Practiced Fundamental CAD Techniques for Complex Shapes and Multi-Part Assemblies.
+      </p>
+      <div class="section-text">
+        <ul>
+            <li> <strong>Assembly Basics:</strong> I improved skills in applying concentric and coincident mates to align separate components accurately.</li>
+            <li> <strong>Working from Visual References:</strong> I gained experience in reading engineering drawings and translating into a clean 3D CAD model.</li>
+            <li> <strong>Revolve Tools:</strong> I learned how to sketch cross-sectional profiles and use revolve features to create organic, curved shapes.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SECTION 3: PICTURES AND FILES -->
+    <!-- ======================================================== -->
+    <section class="section-block">
+      <div class="section-heading-row">
+        <h2 class="section-heading">Pictures and Files</h2>
+        <div class="heading-line"></div>
+      </div>
+
+      <!-- CAROUSEL -->
+      <div class="carousel-container">
+        <!-- Slide 1 -->
+        <div class="carousel-slide active">
+          <img src="hydrantpictures/barrel.png" alt="Project image 1" class="carousel-image">
+        </div>
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+          <img src="hydrantpictures/bonnet.png" alt="Project image 2" class="carousel-image">
+        </div>
+        <!-- Slide 3 -->
+        <div class="carousel-slide">
+          <img src="hydrantpictures/small nozzle.png" alt="Project image 3" class="carousel-image">
+        </div>
+        <!-- Slide 1 -->
+        <div class="carousel-slide">
+          <img src="hydrantpictures/large nozzle.png" alt="Project image 4" class="carousel-image">
+        </div>
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+          <img src="hydrantpictures/assembly.png" alt="Project image 5" class="carousel-image">
+        </div>
+
+        <!-- Carousel Navigation Arrows -->
+        <button class="carousel-btn carousel-prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="carousel-btn carousel-next" onclick="changeSlide(1)">&#10095;</button>
+      </div>
+
+      <!-- EXTERNAL WEBSITE BUTTON -->
+      <div class="btn-container">
+        <a href="https://drive.google.com/drive/folders/1OqTAxtIJAUQpeiN1vFYnamZx1T9I3doG?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-project-link">
+          View Project Files & Repository &#8599;
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SECTION 4: RESOURCES -->
+    <!-- ======================================================== -->
+    <section class="section-block">
+      <div class="section-heading-row">
+        <h2 class="section-heading">Resources</h2>
+        <div class="heading-line"></div>
+      </div>
+      <div class="section-text">
+        <p>Engineering drawing of bonnet: <a href="https://autocadnetwork.blogspot.com/2024/01/fire-hydrant-in-autocad-step-by-step.html" target="_blank" rel="noopener noreferrer">AutoCAD Network</a></p>
+        <p>Engineering drawing of barrel: <a href="https://autocadnetwork.blogspot.com/2024/02/fire-hydrant-in-autocad-step-by-step.html" target="_blank" rel="noopener noreferrer">AutoCAD Network</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SMALL SCRIPT TO POWER THE IMAGE CAROUSEL -->
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+
+    function changeSlide(direction) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + direction + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
